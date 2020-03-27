@@ -3,3 +3,9 @@
 
 # Ada Library Information
 *.ali
+
+build/bin/*
+build/obj/*
+nazar.gpr
+nazar.log
+src/nazar-paths.ads
