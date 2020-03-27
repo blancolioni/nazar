@@ -3,6 +3,7 @@ source_dir = src
 source_dir = src/driver
 source_dir = src/text
 depend = { project = wlib version = any }
+depend = { project = tropos version = any }
 main_unit = nazar-driver
 exec_name = nazar
 config_dir = config
