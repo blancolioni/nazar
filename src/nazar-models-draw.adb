@@ -36,7 +36,7 @@ package body Nazar.Models.Draw is
    -- Clear --
    -----------
 
-   procedure Clear (Model : in out Nazar_Draw_Model) is
+   procedure Clear (Model : in out Root_Draw_Model) is
    begin
       Model.Ops.Clear;
    end Clear;

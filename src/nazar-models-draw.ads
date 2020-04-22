@@ -12,7 +12,7 @@ package Nazar.Models.Draw is
    type Nazar_Draw_Model is access all Root_Draw_Model'Class;
 
    procedure Clear
-     (Model : in out Nazar_Draw_Model);
+     (Model : in out Root_Draw_Model);
 
    function Background_Color
      (Model : Root_Draw_Model)
