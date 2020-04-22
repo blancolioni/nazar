@@ -38,6 +38,10 @@ package Nazar.Models is
    overriding procedure Notify_Observers
      (Model    : Nazar_Model_Record);
 
+   procedure Reload
+     (Model : in out Nazar_Model_Record)
+   is null;
+
    function Null_Model return Nazar_Model_Record'Class;
 
 private
