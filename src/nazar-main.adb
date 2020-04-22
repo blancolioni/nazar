@@ -11,6 +11,7 @@ package body Nazar.Main is
    begin
       Nazar.Logging.Start_Logging;
       Nazar.Signals.Create_Signal ("signal-command");
+      Nazar.Signals.Create_Signal ("signal-activate");
    end Init;
 
    ----------

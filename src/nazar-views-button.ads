@@ -1,6 +1,6 @@
-package Nazar.Views.Buttons is
+package Nazar.Views.Button is
 
-   type Button_View_Interface is interface;
+   type Button_View_Interface is interface and Nazar_View_Interface;
 
    type Nazar_Button_View is access all Button_View_Interface'Class;
 
@@ -17,4 +17,4 @@ package Nazar.Views.Buttons is
    procedure Emit_Activate_Signal
      (View : Button_View_Interface'Class);
 
-end Nazar.Views.Buttons;
+end Nazar.Views.Button;
