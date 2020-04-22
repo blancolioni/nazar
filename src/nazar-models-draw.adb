@@ -30,8 +30,6 @@ package body Nazar.Models.Draw is
             End_Angle   => Nazar.Trigonometry.From_Degrees (360.0)));
    end Circle;
 
-   pragma Warnings (Off);  --  GNAT 2019 thinks Model is not modified in Clear
-
    -----------
    -- Clear --
    -----------
@@ -40,8 +38,6 @@ package body Nazar.Models.Draw is
    begin
       Model.Ops.Clear;
    end Clear;
-
-   pragma Warnings (On);
 
    ------------------------
    -- Iterate_Operations --
