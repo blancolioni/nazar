@@ -32,6 +32,18 @@ package Nazar.Draw_Operations is
      (Context  : in out Draw_Context;
       Viewport : Rectangle);
 
+   function Get_Target_Width
+     (Context : Draw_Context)
+      return Nazar_Float;
+
+   function Get_Target_Height
+     (Context : Draw_Context)
+      return Nazar_Float;
+
+   function Get_Viewport
+     (Context : Draw_Context)
+      return Rectangle;
+
    type Draw_Property is private;
 
    function Color_Property
@@ -155,6 +167,21 @@ private
          Current_Fill       : Boolean := False;
          Changed            : Property_Flags := (others => True);
       end record;
+
+   function Get_Target_Width
+     (Context : Draw_Context)
+      return Nazar_Float
+   is (Context.Target.W);
+
+   function Get_Target_Height
+     (Context : Draw_Context)
+      return Nazar_Float
+   is (Context.Target.H);
+
+   function Get_Viewport
+     (Context : Draw_Context)
+      return Rectangle
+   is (Context.Viewport);
 
    type Draw_Operation (Primitive : Draw_Primitive) is
       record
