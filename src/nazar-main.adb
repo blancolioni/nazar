@@ -3,6 +3,13 @@ with Nazar.Signals;
 
 package body Nazar.Main is
 
+   protected Render_Lock is
+      entry Lock;
+      procedure Unlock;
+   private
+      Locked : Boolean := False;
+   end Render_Lock;
+
    ----------
    -- Init --
    ----------
@@ -14,6 +21,32 @@ package body Nazar.Main is
       Nazar.Signals.Create_Signal ("signal-activate");
    end Init;
 
+   -----------------
+   -- Render_Lock --
+   -----------------
+
+   protected body Render_Lock is
+
+      ----------
+      -- Lock --
+      ----------
+
+      entry Lock when not Locked is
+      begin
+         Locked := True;
+      end Lock;
+
+      ------------
+      -- Unlock --
+      ------------
+
+      procedure Unlock is
+      begin
+         Locked := False;
+      end Unlock;
+
+   end Render_Lock;
+
    ----------
    -- Stop --
    ----------
@@ -22,5 +55,18 @@ package body Nazar.Main is
    begin
       Nazar.Logging.Stop_Logging;
    end Stop;
+
+   ----------------------
+   -- With_Render_Lock --
+   ----------------------
+
+   procedure With_Render_Lock
+     (Process : not null access procedure)
+   is
+   begin
+      Render_Lock.Lock;
+      Process.all;
+      Render_Lock.Unlock;
+   end With_Render_Lock;
 
 end Nazar.Main;

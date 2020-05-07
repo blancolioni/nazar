@@ -42,6 +42,10 @@ package Nazar.Models is
      (Model : in out Nazar_Model_Record)
    is null;
 
+   procedure Unload
+     (Model : in out Nazar_Model_Record)
+   is null;
+
    function Null_Model return Nazar_Model_Record'Class;
 
 private
