@@ -39,6 +39,19 @@ package body Nazar.Models.Draw is
       Model.Ops.Clear;
    end Clear;
 
+   ---------------
+   -- Draw_Text --
+   ---------------
+
+   procedure Draw_Text
+     (Model : in out Root_Draw_Model;
+      Text  : String)
+   is
+   begin
+      Model.Ops.Append
+        (Nazar.Draw_Operations.Text (Text));
+   end Draw_Text;
+
    ------------------------
    -- Iterate_Operations --
    ------------------------
@@ -192,5 +205,23 @@ package body Nazar.Models.Draw is
         (Nazar.Draw_Operations.Set_Property
            (Nazar.Draw_Operations.Fill_Property (Fill)));
    end Set_Fill;
+
+   --------------
+   -- Set_Font --
+   --------------
+
+   procedure Set_Font
+     (Model  : in out Root_Draw_Model;
+      Family : String;
+      Size   : Nazar_Float;
+      Italic : Boolean;
+      Bold   : Boolean)
+   is
+   begin
+      Model.Ops.Append
+        (Nazar.Draw_Operations.Set_Property
+           (Nazar.Draw_Operations.Font_Property
+                (Family, Size, Italic, Bold)));
+   end Set_Font;
 
 end Nazar.Models.Draw;

@@ -86,7 +86,18 @@ package body Nazar.Draw_Operations is
             end;
 
          when Text =>
-            null;
+            if Context.Changed (Font_Property) then
+               Render.Set_Font
+                 (Family =>
+                    Ada.Strings.Unbounded.To_String
+                      (Context.Current_Font.Font_Family),
+                  Size   => Context.Current_Font.Font_Size,
+                  Italic => Context.Current_Font.Font_Italic,
+                  Bold   => Context.Current_Font.Font_Bold);
+               Context.Changed (Font_Property) := False;
+            end if;
+            Render.Text
+              (Ada.Strings.Unbounded.To_String (Operation.Draw_Text));
 
          when Flush =>
             Render.Render_Current
@@ -115,6 +126,12 @@ package body Nazar.Draw_Operations is
                         Context.Changed (Color_Property) := True;
                      end if;
                   end;
+               when Font_Property =>
+                  if Context.Current_Font /= Operation.Setting then
+                     Context.Current_Font := Operation.Setting;
+                     Context.Changed (Font_Property) := True;
+                  end if;
+
                when Line_Width_Property =>
                   null;
                when Fill_Property =>
@@ -146,6 +163,23 @@ package body Nazar.Draw_Operations is
    begin
       return (Fill_Property, Fill);
    end Fill_Property;
+
+   -------------------
+   -- Font_Property --
+   -------------------
+
+   function Font_Property
+     (Family : String;
+      Size   : Nazar_Float;
+      Italic : Boolean := False;
+      Bold   : Boolean := False)
+      return Draw_Property
+   is
+   begin
+      return (Font_Property,
+              Ada.Strings.Unbounded.To_Unbounded_String (Family),
+              Size, Italic, Bold);
+   end Font_Property;
 
    -------------------------
    -- Get_Screen_Position --
@@ -294,6 +328,16 @@ package body Nazar.Draw_Operations is
       Render.Saved.Append (Render.Current);
       Render.Current := Context;
    end Start_Draw;
+
+   function Text
+     (S : String)
+      return Draw_Operation
+   is
+   begin
+      return Draw_Operation'
+        (Primitive   => Text,
+         Draw_Text   => Ada.Strings.Unbounded.To_Unbounded_String (S));
+   end Text;
 
    --------------------
    -- World_Position --

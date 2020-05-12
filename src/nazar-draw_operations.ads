@@ -54,6 +54,13 @@ package Nazar.Draw_Operations is
      (Fill : Boolean)
       return Draw_Property;
 
+   function Font_Property
+     (Family : String;
+      Size   : Nazar_Float;
+      Italic : Boolean := False;
+      Bold   : Boolean := False)
+      return Draw_Property;
+
    type Draw_Operation (<>) is private;
 
    function Move
@@ -65,6 +72,10 @@ package Nazar.Draw_Operations is
      (Radius      : Nazar_Float;
       Start_Angle : Nazar.Trigonometry.Angle;
       End_Angle   : Nazar.Trigonometry.Angle)
+      return Draw_Operation;
+
+   function Text
+     (S : String)
       return Draw_Operation;
 
    function Render
@@ -90,6 +101,11 @@ package Nazar.Draw_Operations is
       X, Y   : Nazar_Float)
    is abstract;
 
+   procedure Text
+     (Render : in out Root_Render_Type;
+      S      : String)
+   is abstract;
+
    procedure Arc
      (Render        : in out Root_Render_Type;
       Radius        : Nazar_Float;
@@ -100,6 +116,14 @@ package Nazar.Draw_Operations is
    procedure Set_Color
      (Render : in out Root_Render_Type;
       Color  : Nazar.Colors.Nazar_Color)
+   is abstract;
+
+   procedure Set_Font
+     (Render : in out Root_Render_Type;
+      Family : String;
+      Size   : Nazar_Float;
+      Italic : Boolean;
+      Bold   : Boolean)
    is abstract;
 
    procedure Render_Current
@@ -140,7 +164,8 @@ private
      (No_Property,
       Color_Property,
       Line_Width_Property,
-      Fill_Property);
+      Fill_Property,
+      Font_Property);
 
    type Draw_Property (Primitive : Draw_Property_Primitive := No_Property) is
       record
@@ -153,6 +178,11 @@ private
                Line_Width_Value : Nazar_Float;
             when Fill_Property =>
                Fill_Value       : Boolean;
+            when Font_Property =>
+               Font_Family      : Ada.Strings.Unbounded.Unbounded_String;
+               Font_Size        : Nazar_Float;
+               Font_Italic      : Boolean;
+               Font_Bold        : Boolean;
          end case;
       end record;
 
@@ -165,6 +195,7 @@ private
          Current_Color      : Nazar.Colors.Nazar_Color := (1.0, 1.0, 1.0, 1.0);
          Current_Line_Width : Nazar_Float := 1.0;
          Current_Fill       : Boolean := False;
+         Current_Font       : Draw_Property (Font_Property);
          Changed            : Property_Flags := (others => True);
       end record;
 

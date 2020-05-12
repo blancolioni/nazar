@@ -41,6 +41,10 @@ package Nazar.Models.Draw is
       World_X : Nazar_Float;
       World_Y : Nazar_Float);
 
+   procedure Draw_Text
+     (Model : in out Root_Draw_Model;
+      Text  : String);
+
    procedure Circle
      (Model  : in out Root_Draw_Model;
       Radius : Nazar_Float);
@@ -48,6 +52,13 @@ package Nazar.Models.Draw is
    procedure Set_Fill
      (Model   : in out Root_Draw_Model;
       Fill    : Boolean);
+
+   procedure Set_Font
+     (Model  : in out Root_Draw_Model;
+      Family : String;
+      Size   : Nazar_Float;
+      Italic : Boolean;
+      Bold   : Boolean);
 
    procedure Render
      (Model    : in out Root_Draw_Model;
