@@ -99,6 +99,15 @@ package body Nazar.Models.Draw is
             Paint => False));
    end Move_To;
 
+   ------------------
+   -- Queue_Render --
+   ------------------
+
+   procedure Queue_Render (Model : in out Root_Draw_Model) is
+   begin
+      Model.Render_Queued := True;
+   end Queue_Render;
+
    ------------
    -- Render --
    ------------

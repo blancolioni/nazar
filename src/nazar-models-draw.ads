@@ -76,6 +76,9 @@ package Nazar.Models.Draw is
    procedure Save_State (Model : in out Root_Draw_Model);
    procedure Restore_State (Model : in out Root_Draw_Model);
 
+   procedure Queue_Render (Model : in out Root_Draw_Model);
+   function Render_Queued (Model : Root_Draw_Model) return Boolean;
+
    procedure Render
      (Model    : Root_Draw_Model;
       Context  : in out Nazar.Draw_Operations.Draw_Context;
@@ -91,8 +94,9 @@ private
    type Root_Draw_Model is
      new Nazar_Model_Record with
       record
-         Bounding_Box : Rectangle;
-         Ops          : Draw_Operation_Lists.List;
+         Render_Queued : Boolean := True;
+         Bounding_Box  : Rectangle;
+         Ops           : Draw_Operation_Lists.List;
       end record;
 
    overriding function Class_Name
@@ -104,5 +108,8 @@ private
      (Model : Root_Draw_Model'Class)
       return Rectangle
    is (Model.Bounding_Box);
+
+   function Render_Queued (Model : Root_Draw_Model) return Boolean
+   is (Model.Render_Queued);
 
 end Nazar.Models.Draw;
