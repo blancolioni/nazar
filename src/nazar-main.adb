@@ -4,10 +4,7 @@ with Nazar.Signals;
 package body Nazar.Main is
 
    protected Render_Lock is
-      entry Lock;
-      procedure Unlock;
-   private
-      Locked : Boolean := False;
+      procedure Execute (Proc : not null access procedure);
    end Render_Lock;
 
    ----------
@@ -27,23 +24,10 @@ package body Nazar.Main is
 
    protected body Render_Lock is
 
-      ----------
-      -- Lock --
-      ----------
-
-      entry Lock when not Locked is
+      procedure Execute (Proc : not null access procedure) is
       begin
-         Locked := True;
-      end Lock;
-
-      ------------
-      -- Unlock --
-      ------------
-
-      procedure Unlock is
-      begin
-         Locked := False;
-      end Unlock;
+         Proc.all;
+      end Execute;
 
    end Render_Lock;
 
@@ -64,9 +48,7 @@ package body Nazar.Main is
      (Process : not null access procedure)
    is
    begin
-      Render_Lock.Lock;
-      Process.all;
-      Render_Lock.Unlock;
+      Render_Lock.Execute (Process);
    end With_Render_Lock;
 
 end Nazar.Main;
