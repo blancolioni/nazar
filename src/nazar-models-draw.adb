@@ -52,6 +52,24 @@ package body Nazar.Models.Draw is
         (Nazar.Draw_Operations.Text (Text));
    end Draw_Text;
 
+   -----------
+   -- Image --
+   -----------
+
+   procedure Image
+     (Model         : in out Root_Draw_Model;
+      Resource_Name : String;
+      Width, Height : Nazar_Float)
+   is
+   begin
+      Model.Ops.Append
+        (Nazar.Draw_Operations.Image
+           (Resource_Name => Resource_Name,
+            Width         => Width,
+            Height        => Height,
+            Rotation      => Nazar.Trigonometry.From_Degrees (0.0)));
+   end Image;
+
    ------------------------
    -- Iterate_Operations --
    ------------------------
@@ -117,18 +135,29 @@ package body Nazar.Models.Draw is
       Context  : in out Nazar.Draw_Operations.Draw_Context;
       Renderer : in out Nazar.Draw_Operations.Root_Render_Type'Class)
    is
+      procedure Do_Render;
+
+      ---------------
+      -- Do_Render --
+      ---------------
+
+      procedure Do_Render is
+      begin
+         Nazar.Logging.Log (Model,
+                            "rendering" & Model.Ops.Length'Image
+                            & " draw primitives");
+
+         Renderer.Start_Draw (Context);
+         for Op of Model.Ops loop
+            Renderer.Draw (Op);
+         end loop;
+         Renderer.End_Draw;
+
+         Nazar.Logging.Log (Model, "done");
+      end Do_Render;
+
    begin
-      Nazar.Logging.Log (Model,
-                         "rendering" & Model.Ops.Length'Image
-                         & " draw primitives");
-
-      Renderer.Start_Draw (Context);
-      for Op of Model.Ops loop
-         Renderer.Draw (Op);
-      end loop;
-      Renderer.End_Draw;
-
-      Nazar.Logging.Log (Model, "done");
+      Do_Render;
    end Render;
 
    ------------

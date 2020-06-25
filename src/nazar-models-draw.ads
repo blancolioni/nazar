@@ -49,6 +49,11 @@ package Nazar.Models.Draw is
      (Model  : in out Root_Draw_Model;
       Radius : Nazar_Float);
 
+   procedure Image
+     (Model         : in out Root_Draw_Model;
+      Resource_Name : String;
+      Width, Height : Nazar_Float);
+
    procedure Set_Fill
      (Model   : in out Root_Draw_Model;
       Fill    : Boolean);

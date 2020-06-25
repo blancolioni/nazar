@@ -99,6 +99,12 @@ package body Nazar.Draw_Operations is
             Render.Text
               (Ada.Strings.Unbounded.To_String (Operation.Draw_Text));
 
+         when Image =>
+            Render.Image
+              (Ada.Strings.Unbounded.To_String (Operation.Image_Resource),
+               Operation.Image_Width, Operation.Image_Height,
+               Operation.Image_Rotation);
+
          when Flush =>
             Render.Render_Current
               (Fill     => Context.Current_Fill,
@@ -206,6 +212,26 @@ package body Nazar.Draw_Operations is
          Y := World.Y;
       end if;
    end Get_Screen_Position;
+
+   -----------
+   -- Image --
+   -----------
+
+   function Image
+     (Resource_Name : String;
+      Width, Height : Nazar_Float;
+      Rotation      : Nazar.Trigonometry.Angle)
+      return Draw_Operation
+   is
+   begin
+      return Draw_Operation'
+        (Primitive      => Image,
+         Image_Resource =>
+           Ada.Strings.Unbounded.To_Unbounded_String (Resource_Name),
+         Image_Width    => Width,
+         Image_Height   => Height,
+         Image_Rotation => Rotation);
+   end Image;
 
    ----------
    -- Move --

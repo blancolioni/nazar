@@ -78,6 +78,12 @@ package Nazar.Draw_Operations is
      (S : String)
       return Draw_Operation;
 
+   function Image
+     (Resource_Name : String;
+      Width, Height : Nazar_Float;
+      Rotation      : Nazar.Trigonometry.Angle)
+      return Draw_Operation;
+
    function Render
      (Preserve : Boolean)
       return Draw_Operation;
@@ -111,6 +117,13 @@ package Nazar.Draw_Operations is
       Radius        : Nazar_Float;
       Start_Radians : Nazar_Float;
       End_Radians   : Nazar_Float)
+   is abstract;
+
+   procedure Image
+     (Render        : in out Root_Render_Type;
+      Resource_Name : String;
+      Width, Height : Nazar_Float;
+      Rotation      : Nazar.Trigonometry.Angle)
    is abstract;
 
    procedure Set_Color
@@ -158,7 +171,7 @@ private
       end record;
 
    type Draw_Primitive is
-     (Move, Arc, Text, Flush, Property, State);
+     (Move, Arc, Text, Image, Flush, Property, State);
 
    type Draw_Property_Primitive is
      (No_Property,
@@ -218,20 +231,25 @@ private
       record
          case Primitive is
             when Move =>
-               Destination : Draw_Position;
-               Paint       : Boolean;
+               Destination    : Draw_Position;
+               Paint          : Boolean;
             when Arc =>
-               Radius      : Nazar_Float;
-               Start_Angle : Nazar.Trigonometry.Angle;
-               End_Angle   : Nazar.Trigonometry.Angle;
+               Radius         : Nazar_Float;
+               Start_Angle    : Nazar.Trigonometry.Angle;
+               End_Angle      : Nazar.Trigonometry.Angle;
             when Text =>
-               Draw_Text   : Ada.Strings.Unbounded.Unbounded_String;
+               Draw_Text      : Ada.Strings.Unbounded.Unbounded_String;
+            when Image =>
+               Image_Resource : Ada.Strings.Unbounded.Unbounded_String;
+               Image_Width    : Nazar_Float;
+               Image_Height   : Nazar_Float;
+               Image_Rotation : Nazar.Trigonometry.Angle;
             when Flush =>
-               Preserve    : Boolean;
+               Preserve       : Boolean;
             when Property =>
-               Setting     : Draw_Property;
+               Setting        : Draw_Property;
             when State =>
-               Save        : Boolean;
+               Save           : Boolean;
          end case;
       end record;
 
