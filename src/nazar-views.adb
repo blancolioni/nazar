@@ -1,5 +1,3 @@
-with Nazar.Interfaces.Observable;
-
 with Nazar.Logging;
 
 package body Nazar.Views is
@@ -82,6 +80,21 @@ package body Nazar.Views is
    begin
       Observer.View.Model_Changed;
    end Notify;
+
+   -------------
+   -- Observe --
+   -------------
+
+   procedure Observe
+     (View : not null access Nazar_View_Record;
+      Item : not null access
+        Nazar.Interfaces.Observable.Observable_Interface'Class)
+   is
+      Observer : constant View_Observer :=
+                   View_Observer'(View => Nazar_View (View));
+   begin
+      Item.Add_Observer (Observer);
+   end Observe;
 
    ------------------
    -- On_Configure --

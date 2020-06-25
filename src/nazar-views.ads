@@ -3,6 +3,7 @@ private with Nazar.Names;
 
 with WL.Guids;
 
+with Nazar.Interfaces.Observable;
 with Nazar.Interfaces.Properties;
 
 with Nazar.Models;
@@ -77,6 +78,11 @@ package Nazar.Views is
    overriding procedure Set_Model
      (View  : not null access Nazar_View_Record;
       Model : not null access Nazar.Models.Nazar_Model_Record'Class);
+
+   procedure Observe
+     (View : not null access Nazar_View_Record;
+      Item : not null access
+        Nazar.Interfaces.Observable.Observable_Interface'Class);
 
    type Configure_Callback is access
      function (View : not null access Nazar_View_Record'Class;
