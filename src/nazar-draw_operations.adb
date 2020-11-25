@@ -96,6 +96,12 @@ package body Nazar.Draw_Operations is
                   Bold   => Context.Current_Font.Font_Bold);
                Context.Changed (Font_Property) := False;
             end if;
+
+            if Context.Changed (Color_Property) then
+               Render.Set_Color (Context.Current_Color);
+               Context.Changed (Color_Property) := False;
+            end if;
+
             Render.Text
               (Ada.Strings.Unbounded.To_String (Operation.Draw_Text));
 
