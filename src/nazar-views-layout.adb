@@ -119,7 +119,8 @@ package body Nazar.Views.Layout is
       begin
          while Column_Index > Container.Column_Sizes.Last_Index loop
             Container.Column_Sizes.Append
-              ((Nazar.Measurements.Proportional, 1.0));
+              (Nazar.Measurements.Nazar_Measurement'
+                 (Nazar.Measurements.Proportional, 1.0));
          end loop;
          Container.Column_Sizes (Column_Index) := Width;
       end Set;
@@ -147,7 +148,8 @@ package body Nazar.Views.Layout is
       begin
          while Row_Index > Container.Row_Sizes.Last_Index loop
             Container.Row_Sizes.Append
-              ((Nazar.Measurements.Proportional, 1.0));
+              (Nazar.Measurements.Nazar_Measurement'
+                 (Nazar.Measurements.Proportional, 1.0));
          end loop;
          Container.Row_Sizes (Row_Index) := Height;
       end Set;
