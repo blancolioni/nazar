@@ -262,4 +262,19 @@ package body Nazar.Models.Draw is
                 (Family, Size, Italic, Bold)));
    end Set_Font;
 
+   --------------------
+   -- Set_Line_Width --
+   --------------------
+
+   procedure Set_Line_Width
+     (Model : in out Root_Draw_Model;
+      Width : Nazar_Float)
+   is
+   begin
+      Model.Ops.Append
+        (Nazar.Draw_Operations.Set_Property
+           (Nazar.Draw_Operations.Line_Width_Property
+                (Width)));
+   end Set_Line_Width;
+
 end Nazar.Models.Draw;

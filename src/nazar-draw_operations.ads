@@ -50,6 +50,10 @@ package Nazar.Draw_Operations is
      (Color : Nazar.Colors.Nazar_Color)
       return Draw_Property;
 
+   function Line_Width_Property
+     (Width : Nazar_Float)
+      return Draw_Property;
+
    function Fill_Property
      (Fill : Boolean)
       return Draw_Property;
@@ -129,6 +133,11 @@ package Nazar.Draw_Operations is
    procedure Set_Color
      (Render : in out Root_Render_Type;
       Color  : Nazar.Colors.Nazar_Color)
+   is abstract;
+
+   procedure Set_Line_Width
+     (Render : in out Root_Render_Type;
+      Width  : Nazar_Float)
    is abstract;
 
    procedure Set_Font

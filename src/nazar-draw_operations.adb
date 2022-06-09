@@ -28,6 +28,10 @@ package body Nazar.Draw_Operations is
          Render.Set_Color (Render.Current.Current_Color);
          Render.Current.Changed (Color_Property) := False;
       end if;
+      if Render.Current.Changed (Line_Width_Property) then
+         Render.Set_Line_Width (Render.Current.Current_Line_Width);
+         Render.Current.Changed (Line_Width_Property) := False;
+      end if;
    end Check_State;
 
    --------------------
@@ -145,7 +149,14 @@ package body Nazar.Draw_Operations is
                   end if;
 
                when Line_Width_Property =>
-                  null;
+                  if Context.Current_Line_Width
+                    /= Operation.Setting.Line_Width_Value
+                  then
+                     Context.Current_Line_Width :=
+                       Operation.Setting.Line_Width_Value;
+                     Context.Changed (Line_Width_Property) := True;
+                  end if;
+
                when Fill_Property =>
                   if Context.Current_Fill /= Operation.Setting.Fill_Value then
                      Context.Current_Fill := Operation.Setting.Fill_Value;
@@ -238,6 +249,19 @@ package body Nazar.Draw_Operations is
          Image_Height   => Height,
          Image_Rotation => Rotation);
    end Image;
+
+   -------------------------
+   -- Line_Width_Property --
+   -------------------------
+
+   function Line_Width_Property
+     (Width : Nazar_Float)
+      return Draw_Property
+   is
+   begin
+      return Draw_Property'
+        (Line_Width_Property, Width);
+   end Line_Width_Property;
 
    ----------
    -- Move --

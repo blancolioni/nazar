@@ -73,6 +73,10 @@ package Nazar.Models.Draw is
      (Model : in out Root_Draw_Model;
       Color : Nazar.Colors.Nazar_Color);
 
+   procedure Set_Line_Width
+     (Model : in out Root_Draw_Model;
+      Width : Nazar_Float);
+
    procedure Set_Color
      (Model   : in out Root_Draw_Model'Class;
       R, G, B : Nazar_Unit_Float;
