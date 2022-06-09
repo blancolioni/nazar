@@ -14,8 +14,9 @@ package body Nazar.Main is
    procedure Init is
    begin
       Nazar.Logging.Start_Logging;
-      Nazar.Signals.Create_Signal ("signal-command");
       Nazar.Signals.Create_Signal ("signal-activate");
+      Nazar.Signals.Create_Signal ("signal-click");
+      Nazar.Signals.Create_Signal ("signal-command");
    end Init;
 
    -----------------
